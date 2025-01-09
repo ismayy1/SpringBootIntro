@@ -21,9 +21,7 @@ public class StudentController {
 
     @GetMapping // http://localhost:8081/students + GET Request
     public ResponseEntity<List<Student>> getAll() { // ResponseEntity -> Entire response obj with Headers, Response Body, HTTP Status Code.
-
         List<Student> students = studentService.getAllStudents();
-
         return ResponseEntity.ok(students); // sends the parameter along with 200 OK status code
     }
 
