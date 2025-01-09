@@ -2,6 +2,7 @@ package com.tpe.service;
 
 import com.tpe.domain.Student;
 import com.tpe.exception.ConflictException;
+import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,10 @@ public class StudentService {
             throw new ConflictException("Email address is already in use, Please try a different one.");
         }
         studentRepository.save(student);
+    }
+
+    public Student findStudentById(Long id) {
+        return studentRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Not student found with the ID: " + id));
     }
 }

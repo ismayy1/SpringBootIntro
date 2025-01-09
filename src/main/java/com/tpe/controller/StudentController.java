@@ -35,6 +35,17 @@ public class StudentController {
         map.put("status", "SUCCESS");
 
         return new ResponseEntity<>(map, HttpStatus.CREATED);   // bcs we created an obj, the status code is '201' -> CREATED
+    }
 
+    @GetMapping("/query") // http://localhost:8081/students/query?id=1  + GET Request - QUERY
+    public ResponseEntity<Student> getStudentById(@RequestParam("id") Long id) {
+        Student student = studentService.findStudentById(id);
+        return ResponseEntity.ok(student);
+    }
+
+    @GetMapping("/{id}") // http://localhost:8081/students/1  + GET Request - Path Var
+    public ResponseEntity<Student> getStudentByIdPathVar(@PathVariable("id") Long id) {
+        Student student = studentService.findStudentById(id);
+        return ResponseEntity.ok(student);
     }
 }
