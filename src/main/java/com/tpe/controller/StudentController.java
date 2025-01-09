@@ -13,19 +13,19 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/students")    // http://localhost:8081/students + HTTP Methods
+@RequestMapping("/students")    // http://localhost:8080/students + HTTP Methods
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
-    @GetMapping // http://localhost:8081/students + GET Request
+    @GetMapping // http://localhost:8080/students + GET Request
     public ResponseEntity<List<Student>> getAll() { // ResponseEntity -> Entire response obj with Headers, Response Body, HTTP Status Code.
         List<Student> students = studentService.getAllStudents();
         return ResponseEntity.ok(students); // sends the parameter along with 200 OK status code
     }
 
-    @PostMapping    // http://localhost:8081/students + POST Request + JSON body
+    @PostMapping    // http://localhost:8080/students + POST Request + JSON body
     public ResponseEntity<Map<String, String>> createStudent(@Valid @RequestBody Student student) {   // to give the multiple messages as response
 
         studentService.saveStudent(student);
@@ -37,13 +37,13 @@ public class StudentController {
         return new ResponseEntity<>(map, HttpStatus.CREATED);   // bcs we created an obj, the status code is '201' -> CREATED
     }
 
-    @GetMapping("/query") // http://localhost:8081/students/query?id=1  + GET Request - QUERY
+    @GetMapping("/query") // http://localhost:8080/students/query?id=1  + GET Request - QUERY
     public ResponseEntity<Student> getStudentById(@RequestParam("id") Long id) {
         Student student = studentService.findStudentById(id);
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/{id}") // http://localhost:8081/students/1  + GET Request - Path Var
+    @GetMapping("/{id}") // http://localhost:8080/students/1  + GET Request - Path Var
     public ResponseEntity<Student> getStudentByIdPathVar(@PathVariable("id") Long id) {
         Student student = studentService.findStudentById(id);
         return ResponseEntity.ok(student);
