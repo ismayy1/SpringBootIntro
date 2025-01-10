@@ -1,6 +1,7 @@
 package com.tpe.controller;
 
 import com.tpe.domain.Student;
+import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -61,7 +62,11 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")    // http://localhost:8080/students/1 + PUT Request + JSON RequestBody
-    public ResponseEntity<String> updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
+    public ResponseEntity<String> updateStudentById(@PathVariable("id") Long id, @RequestBody StudentDTO studentDTO) {
 
+        studentService.updateStudent(id, studentDTO);
+        String message = "StudentUpdated successfully.";
+
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
 }

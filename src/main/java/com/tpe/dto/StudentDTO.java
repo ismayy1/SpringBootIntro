@@ -1,6 +1,7 @@
 package com.tpe.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.tpe.domain.Student;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -19,25 +20,32 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class StudentDTO {
 
+    @Setter(AccessLevel.NONE)   // setter is optional, we can keep/remove it if we want to
     private Long id;
 
     @NotNull(message = "First name can't be NULL.")
     @NotBlank(message = "First name can't be Empty.")
     @Size(min = 2, max = 25, message = "First name must be between {min}-{max} characters")
-    private String firstName;
+    private String name;
 
-    @Column(nullable = false, length = 25)
     private String lastName;
 
     private Integer grade;
 
-    @Column(nullable = false, length = 50, unique = true)
     @Email(message = "Please enter a valid email address")
     private String email;
 
     private String phoneNumber;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd//yyyy HH:mm:ss", timezone = "New York")
     @Setter(AccessLevel.NONE)
     private LocalDateTime createDate = LocalDateTime.now();
+
+    public StudentDTO(Student student) {
+        this.id = student.getId();
+        this.name = student.getFirstName();
+        this.lastName = student.getLastName();
+        this.grade = student.getGrade();
+        this.email = student.getEmail();
+        this.createDate = student.getCreateDate();
+    }
 }

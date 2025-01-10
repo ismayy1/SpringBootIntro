@@ -1,6 +1,7 @@
 package com.tpe.service;
 
 import com.tpe.domain.Student;
+import com.tpe.dto.StudentDTO;
 import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
@@ -44,5 +45,38 @@ public class StudentService {
         Student student = findStudentById(id);
 //        studentRepository.delete(student);
         studentRepository.deleteById(id);
+    }
+
+//    Updater method
+
+
+    public void updateStudent(Long id, StudentDTO studentDTO) {
+        Student existingStudent = findStudentById(id);
+
+        boolean emailExists = studentRepository.existsByEmail(studentDTO.getEmail());
+
+        if (emailExists && !studentDTO.getEmail().equals(existingStudent.getEmail())) {
+            throw new ConflictException("Email already exists. Please provide different one.");
+        }
+
+//         same as above
+//        if (studentDTO.getEmail().equals(existingStudent.getEmail())) {
+////            call to Updater logic
+////            return updateCount
+//        } else if (studentRepository.existsByEmail(studentDTO.getEmail())) {
+////            call to updater logic
+////            return updateCount
+//        } else {
+
+//        }
+
+        existingStudent.setFirstName(studentDTO.getName());
+        existingStudent.setLastName(studentDTO.getLastName());
+        existingStudent.setGrade(studentDTO.getGrade());
+        existingStudent.setEmail(studentDTO.getEmail());
+        existingStudent.setPhoneNumber(studentDTO.getPhoneNumber());
+
+        studentRepository.save(existingStudent);
+
     }
 }
