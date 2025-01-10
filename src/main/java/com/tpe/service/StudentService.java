@@ -39,4 +39,10 @@ public class StudentService {
         return studentRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Not student found with the ID: " + id));
     }
+
+    public void deleteStudentById(Long id) {
+        Student student = findStudentById(id);
+//        studentRepository.delete(student);
+        studentRepository.deleteById(id);
+    }
 }

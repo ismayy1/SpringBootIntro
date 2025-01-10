@@ -31,7 +31,7 @@ public class StudentController {
         studentService.saveStudent(student);
         Map<String, String> map = new HashMap<>();
 
-        map.put("message", "Student created successfully.");
+        map.put("message", "Student: '" + student.getFirstName() + " " + student.getLastName() + "' created successfully.");
         map.put("status", "SUCCESS");
 
         return new ResponseEntity<>(map, HttpStatus.CREATED);   // bcs we created an obj, the status code is '201' -> CREATED
@@ -47,5 +47,21 @@ public class StudentController {
     public ResponseEntity<Student> getStudentByIdPathVar(@PathVariable("id") Long id) {
         Student student = studentService.findStudentById(id);
         return ResponseEntity.ok(student);
+    }
+
+    @DeleteMapping("/{id}")  // http://localhost:8080/students/1 + DELETE Request
+    public ResponseEntity<Map<String, String>> removeStudentById(@PathVariable("id") Long id) {
+        studentService.deleteStudentById(id);
+        Map<String, String> map = new HashMap<>();
+
+        map.put("message", "Student deleted successfully.");
+        map.put("status", "SUCCESS");
+
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")    // http://localhost:8080/students/1 + PUT Request + JSON RequestBody
+    public ResponseEntity<String> updateStudent(@PathVariable("id") Long id, @RequestBody Student student) {
+
     }
 }
