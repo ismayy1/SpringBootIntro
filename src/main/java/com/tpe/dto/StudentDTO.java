@@ -45,6 +45,7 @@ public class StudentDTO {
         this.name = student.getFirstName();
         this.lastName = student.getLastName();
         this.grade = student.getGrade();
+        this.phoneNumber = student.getPhoneNumber();
         this.email = student.getEmail();
         this.createDate = student.getCreateDate();
     }

@@ -19,8 +19,8 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT s FROM Student s WHERE s.grade=:pGrade")   // ":" -> NamedParameter
     List<Student> findAllWithGrade(@Param("pGrade") Integer grade);
 
-    @Query(value = "SELECT * FROM student s WHERE s.grade=:pGrade")
-    List<Student> findAllWithGradeNativeSQL(@Param("pGrade") Integer grade);
+//    @Query(value = "SELECT * FROM student s WHERE s.grade=:pGrade")
+//    List<Student> findAllWithGradeNativeSQL(@Param("pGrade") Integer grade);
 
     @Query("SELECT new com.tpe.dto.StudentDTO(s) FROM Student s WHERE s.id = :id")
     Optional<StudentDTO> findStudentDTOById(@Param("id") Long id);
