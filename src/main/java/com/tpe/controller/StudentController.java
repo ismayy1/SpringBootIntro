@@ -44,13 +44,13 @@ public class StudentController {
 
     @GetMapping("/query") // http://localhost:8080/students/query?id=1  + GET Request - QUERY
     public ResponseEntity<Student> getStudentById(@RequestParam("id") Long id) {
-        Student student = studentService.findStudentById(id);
+        Student student = studentService.findStudent(id);
         return ResponseEntity.ok(student);
     }
 
     @GetMapping("/{id}") // http://localhost:8080/students/1  + GET Request - Path Var
     public ResponseEntity<Student> getStudentByIdPathVar(@PathVariable("id") Long id) {
-        Student student = studentService.findStudentById(id);
+        Student student = studentService.findStudent(id);
         return ResponseEntity.ok(student);
     }
 
@@ -82,5 +82,23 @@ public class StudentController {
         Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
         Page<Student> studentPage = studentService.findAllWithPage(pageable);
         return ResponseEntity.ok(studentPage);
+    }
+
+    @GetMapping("/querylastname")    // http://localhost:8080/students/querylastname?lastName=Smith + GET Request
+    public ResponseEntity<List<Student>> getStudentByLastName(@RequestParam("lastName") String lastName) {
+        List<Student> students = studentService.findStudent(lastName);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/query/{grade}")    // http://localhost:8080/students/query/70 + GET Request
+    public ResponseEntity<List<Student>> getStudentsByGrade(@PathVariable("grade") Integer grade) {
+        List<Student> students = studentService.findAllWithGrade(grade);
+        return ResponseEntity.ok(students);
+    }
+
+    @GetMapping("/query/dto")   // http://localhost:8080/students/query/dto?id=1 + GET Request
+    public ResponseEntity<StudentDTO> getStudentDTOById(@RequestParam("id") Long id) {
+        StudentDTO studentDTO = studentService.findStudentDTOById(id);
+        return ResponseEntity.ok(studentDTO);
     }
 }

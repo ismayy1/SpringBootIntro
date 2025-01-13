@@ -38,13 +38,21 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    public Student findStudentById(Long id) {
+//    find Student By ID
+    public Student findStudent(Long id) {
         return studentRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Not student found with the ID: " + id));
+
+//        return new StudentDTO(student);
     }
 
+//    find Student By Last Name
+public List<Student> findStudent(String lastName) {
+    return studentRepository.findByLastName(lastName);
+}
+
     public void deleteStudentById(Long id) {
-        Student student = findStudentById(id);
+        Student student = findStudent(id);
 //        studentRepository.delete(student);
         studentRepository.deleteById(id);
     }
@@ -53,7 +61,7 @@ public class StudentService {
 
 
     public void updateStudent(Long id, StudentDTO studentDTO) {
-        Student existingStudent = findStudentById(id);
+        Student existingStudent = findStudent(id);
 
         boolean emailExists = studentRepository.existsByEmail(studentDTO.getEmail());
 
@@ -84,5 +92,14 @@ public class StudentService {
 
     public Page<Student> findAllWithPage(Pageable pageable) {
         return studentRepository.findAll(pageable);
+    }
+
+    public List<Student> findAllWithGrade(Integer grade) {
+        return studentRepository.findAllWithGrade(grade);
+    }
+
+    public StudentDTO findStudentDTOById(Long id) {
+        return studentRepository.findStudentDTOById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Not student DTO found with the ID: " + id));
     }
 }
