@@ -4,6 +4,10 @@ import com.tpe.domain.Student;
 import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -68,5 +72,15 @@ public class StudentController {
         String message = "StudentUpdated successfully.";
 
         return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+
+    @GetMapping("/page") // http://localhost:8080/students/page?page=1&size=2&sort=firstName&direction=ASC + GET Request
+    public ResponseEntity<Page<Student>> getAllWithPage(@RequestParam("page") int page,
+                                                        @RequestParam("size") int size,
+                                                        @RequestParam("sort") String prop,
+                                                        @RequestParam("direction") Sort.Direction direction) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
+        Page<Student> studentPage = studentService.findAllWithPage(pageable);
+        return ResponseEntity.ok(studentPage);
     }
 }
